@@ -1,0 +1,88 @@
+name: 更新考试数据
+
+on:
+  # 每周一早上 6:00 (北京时间) 自动运行
+  schedule:
+    - cron: '0 22 * * 0'  # UTC 22:00 = 北京时间周一 06:00
+  # 手动触发
+  workflow_dispatch:
+    inputs:
+      scraper:
+        description: '指定爬虫（留空=全部）'
+        required: false
+        default: ''
+        type: choice
+        options:
+          - ''
+          - neea
+          - chsi
+          - cicpa
+          - mof-juris
+          - sac-tax
+          - medical
+          - guokao
+          - osta
+          - others
+          - international
+
+permissions:
+  contents: write
+
+jobs:
+  scrape-and-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 安装 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 安装依赖
+        run: npm install
+
+      - name: 运行爬虫
+        run: |
+          if [ -n "${{ github.event.inputs.scraper }}" ]; then
+            node scripts/scraper.js --exam ${{ github.event.inputs.scraper }}
+          else
+            node scripts/scraper.js
+          fi
+
+      - name: 数据校验
+        run: node scripts/validate.js
+
+      - name: 检查是否有变更
+        id: check_changes
+        run: |
+          if git diff --quiet data/; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "无数据变更"
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "检测到数据变更"
+          fi
+
+      - name: 提交变更
+        if: steps.check_changes.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/
+          git commit -m "data: 自动更新考试数据 $(date -u +'%Y-%m-%d')"
+          git push
+
+      - name: 输出结果摘要
+        if: always()
+        run: |
+          echo "### 数据更新结果" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ -f data/version.json ]; then
+            echo '```json' >> $GITHUB_STEP_SUMMARY
+            cat data/version.json >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+          else
+            echo "未能生成 version.json" >> $GITHUB_STEP_SUMMARY
+          fi

@@ -1,0 +1,15 @@
+{
+  "name": "exam-calendar-data",
+  "version": "1.0.0",
+  "description": "考试日历小程序 - 数据仓库（爬虫 + 人工维护 + CDN 分发）",
+  "scripts": {
+    "scrape": "node scripts/scraper.js",
+    "scrape:dry": "node scripts/scraper.js --dry-run",
+    "scrape:exam": "node scripts/scraper.js --exam",
+    "validate": "node scripts/validate.js"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,20 @@
+{
+  "timestamp": "2026-07-02T11:25:12.378Z",
+  "summary": {
+    "passed": 77,
+    "warnings": 2,
+    "issues": 0
+  },
+  "issues": [],
+  "warnings": [
+    "⚠ 无考试存在多源交叉验证数据，无法自动核实真实性",
+    "⚠ 9 个考试缺少官网链接: zhongkao-zhejiang, zhongkao-jiangsu, zhongkao-shandong, zhongkao-sichuan, gwyks, shiyedan, xuanchao, sanzhiyifu, jingsong"
+  ],
+  "passed": [
+    "✓ CET4/CET6 日期一致: 2026-06-13",
+    "✓ 初/中级会计通常不同日但相近: junior-accountant: 2026-05-16 | mid-accountant: 2026-09-05",
+    "✓ 执业医师/口腔/中医通常同一考期: zyys: 2026-06-13 | kqys: 2026-06-13 | zky: 2026-08-15",
+    "✓ 雅思/托福全年多场，日期不相关但时间需合理: ielts: 2026-04-19 | toefl: 2026-05-10",
+    "✓ 高考/中考同区域不相关但日期需在6月: gaokao: 2026-06-07 | zhongkao-guangdong: 2026-06-30 | zhongkao-beijing: 2026-06-24 | zhongkao-shanghai: 2026-06-20 | zhongkao-henan: 2026-06-22"
+  ]
+}

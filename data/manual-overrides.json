@@ -1,0 +1,18 @@
+{
+  "_comment": "人工覆盖数据。此文件中的考试条目会覆盖爬虫抓取的结果，优先级最高。用于修正爬虫抓不到或抓不准的数据。key 为考试 id，结构与 exams.json 中的 EXAMS 条目一致。",
+  "_usage": "编辑此文件后，下次 scraper 运行时会自动合并。只需填写需要覆盖的字段，不需要填写全部字段。",
+  "gaokao": {
+    "_note": "高考时间由教育部统一公布，爬虫不易抓取结构化数据，人工维护",
+    "examDate": "2026-06-07",
+    "examDateNote": "6月7日-9日",
+    "registerStart": "2025-11-01",
+    "registerEnd": "2025-11-10"
+  },
+  "zhongkao-guangdong": {
+    "_note": "广东中考由各地市自行安排，人工维护更准确",
+    "examDate": "2026-06-30",
+    "examDateNote": "6月30日-7月2日",
+    "registerStart": "2026-02-25",
+    "registerEnd": "2026-03-27"
+  }
+}
