@@ -1,9 +1,6 @@
 name: 更新考试数据
 
 on:
-  # 推送到 main 时自动运行
-  push:
-    branches: [main]
   # 每周一早上 6:00 (北京时间) 自动运行
   schedule:
     - cron: '0 22 * * 0'  # UTC 22:00 = 北京时间周一 06:00
